@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GlowPlan Skin & Hair Quiz</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #fff7f3; margin:0; color:#2d2424; }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 32px 18px; }
+    .card { background: white; border-radius: 22px; padding: 28px; box-shadow: 0 10px 35px rgba(80,40,30,.12); }
+    h1 { margin-top:0; font-size: 34px; }
+    .sub { color:#725b55; line-height:1.5; }
+    .badge { display:inline-block; background:#ffe1d6; color:#9b3d2c; padding:7px 12px; border-radius:999px; font-weight:bold; font-size:13px; }
+    label { display:block; margin-top:18px; font-weight:bold; }
+    input, select { width:100%; padding:13px; border:1px solid #ddd; border-radius:12px; margin-top:7px; font-size:15px; box-sizing:border-box; }
+    button { margin-top:22px; width:100%; padding:15px; background:#c95f47; color:white; border:0; border-radius:14px; font-size:17px; font-weight:bold; cursor:pointer; }
+    button:hover { background:#b14d38; }
+    .result { display:none; margin-top:24px; padding:22px; background:#fff2ec; border-radius:16px; border:1px solid #ffd5c7; }
+    .result h2 { margin-top:0; }
+    .coupon { margin-top:16px; background:white; padding:14px; border:2px dashed #c95f47; border-radius:14px; font-weight:bold; text-align:center; }
+    .small { font-size:12px; color:#806965; margin-top:12px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <span class="badge">Free 60-second beauty consultation</span>
+      <h1>Find your perfect pre-event glow routine</h1>
+      <p class="sub">Answer 5 quick questions and get a personalised salon/spa recommendation, plus a first-visit offer on WhatsApp.</p>
+      <form id="quiz">
+        <label>Name</label>
+        <input id="name" required placeholder="Your name" />
+        <label>Phone number</label>
+        <input id="phone" required placeholder="10-digit mobile number" pattern="[0-9]{10}" />
+        <label>What are you preparing for?</label>
+        <select id="occasion" required>
+          <option value="">Select one</option>
+          <option>Wedding or family function</option>
+          <option>Date / party / night out</option>
+          <option>Office or college routine</option>
+          <option>Just self-care</option>
+        </select>
+        <label>Your biggest concern right now?</label>
+        <select id="concern" required>
+          <option value="">Select one</option>
+          <option>Dull skin / tan</option>
+          <option>Frizzy or damaged hair</option>
+          <option>Acne / sensitive skin</option>
+          <option>Stress and body fatigue</option>
+        </select>
+        <label>When do you need results?</label>
+        <select id="timeline" required>
+          <option value="">Select one</option>
+          <option>Today or tomorrow</option>
+          <option>This week</option>
+          <option>In 2-3 weeks</option>
+        </select>
+        <label>Preferred budget</label>
+        <select id="budget" required>
+          <option value="">Select one</option>
+          <option>Under ₹999</option>
+          <option>₹1,000–₹2,000</option>
+          <option>₹2,000+</option>
+        </select>
+        <button type="submit">Get my free GlowPlan</button>
+      </form>
+      <div id="result" class="result"></div>
+      <p class="small">Prototype note: in a live version, this form would send the lead to WhatsApp Business, Google Sheets, or a CRM.</p>
+    </div>
+  </div>
+<script>
+  document.getElementById('quiz').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const concern = document.getElementById('concern').value;
+    const timeline = document.getElementById('timeline').value;
+    const budget = document.getElementById('budget').value;
+    let recommendation = '';
+    if(concern.includes('Dull')) recommendation = 'Instant Glow Facial + De-tan add-on';
+    else if(concern.includes('Frizzy')) recommendation = 'Hair Spa + Smooth Finish Blow Dry';
+    else if(concern.includes('Acne')) recommendation = 'Sensitive Skin Clean-up + calming mask';
+    else recommendation = 'Aromatherapy Back Massage + Foot Relaxation';
+    let urgency = timeline.includes('Today') ? 'Book a same-day slot for visible freshness.' : 'Book a slot this week for best results.';
+    const offer = budget.includes('Under') ? 'FREE eyebrow threading with your first service' : '20% off your first GlowPlan package';
+    document.getElementById('result').style.display='block';
+    document.getElementById('result').innerHTML = `
+      <h2>${name}, your GlowPlan is ready ✨</h2>
+      <p><strong>Recommended service:</strong> ${recommendation}</p>
+      <p><strong>Why this works:</strong> It directly targets your current concern and fits your timeline. ${urgency}</p>
+      <div class="coupon">Your first-visit offer: ${offer}<br>Code: GLOW20</div>
+      <p class="small">We’ll WhatsApp you available slots and a short prep checklist.</p>`;
+  });
+</script>
+</body>
+</html>
